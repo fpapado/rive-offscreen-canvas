@@ -1,7 +1,10 @@
 import "./App.css";
-import { Animation } from "./Animation.tsx";
+import RiveAnimation from "@rive-app/react-canvas-lite";
 import { OffscreenRive } from "./OffscreenRive.tsx";
 import { BlockMainThreadButton } from "./BlockMainThreadButton.tsx";
+
+const stateMachineName = "Motion";
+const src = "/animations/6pCQ-clean-the-car.riv";
 
 function App() {
   return (
@@ -9,11 +12,18 @@ function App() {
       <div className="grid">
         <div>
           <h2>Main thread</h2>
-          <Animation />
+          <RiveAnimation
+            src={src}
+            stateMachines={stateMachineName}
+            style={{
+              width: 400,
+              height: 400,
+            }}
+          />
         </div>
         <div>
           <h2>Worker with OffscreenCanvas</h2>
-          <OffscreenRive />
+          <OffscreenRive src={src} stateMachines={stateMachineName} />
         </div>
       </div>
       <BlockMainThreadButton />

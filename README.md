@@ -68,6 +68,11 @@ This approach seems compatible with this note from the Rive docs:
 
 > In a future major version of this runtime, this API may be called internally on initialization by default, with an option to opt-out if you have specific width and height properties you want to set on the canvas
 
+### Other document access (e.g. listeners)
+
+There is no standard way for `rive-canvas` to attach listeners to the DOM `canvas`.
+A general solution would have to account for this, and either provide such a way (e.g. by proxying), or to exclude these use-cases as out of scope.
+
 ### Working with web workers
 
 At the moment, `OffscreenRive` uses a single `riveWorker`, which tracks instanced based on an id.
@@ -81,7 +86,7 @@ If this assumption does not hold, then some worker pooling method could help sca
 At the moment, this is just an inline demo, and is not distributed as a library.
 It can be used as a reference for your own explorations.
 
-While making a framework-specific library would be workable (modulo the source issues above), I have the gut feeling that there is an intermediate, framework-agnostic layer missing.
+While making a framework-specific and use-case library would be workable (modulo the source issues above), I have the gut feeling that there is an intermediate, framework-agnostic layer missing.
 
 This imaginary layer could be `*-canvas-worker`, and would provide a stable API for communicating via `OffscreenCanvas` and a Rive-in-web-worker instance.
 This layer might use [`comlink`](https://github.com/GoogleChromeLabs/comlink), or some other [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) facade, to make it a bit nicer to work with.
@@ -92,4 +97,4 @@ Making a truly generic library that tracks an external API surface is hard work!
 
 To the best of my understanding, distributing libraries with web workers is a bit annoying, because of all the different ways of setting them up.
 Such a library would require extensive documentation, or concrete references for popular frameworks.
-This task would be similar to the task of distributing a wasm library, which Rive already tackles well :)
+This task would be similar to the task of distributing a Wasm library, which Rive already tackles well :)

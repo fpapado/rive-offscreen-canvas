@@ -10,11 +10,10 @@ declare var self: DedicatedWorkerGlobalScope;
  */
 type Id = string;
 
-export type Message =
-  | { type: "dispose"; id: Id }
+type MessageBase =
+  | { type: "cleanup" }
   | {
       type: "load";
-      id: Id;
       data: {
         // We are essentially mirroring the Rive API
         src: string;
@@ -24,10 +23,13 @@ export type Message =
       };
     };
 
+export type Message = MessageBase & { id: Id };
+
 const riveInstances = new Map<Id, Rive>();
 
 self.onmessage = (event: MessageEvent<Message>) => {
   const { id } = event.data;
+
   if (event.data.type === "load") {
     const { src, canvas, autoplay, stateMachines } = event.data.data;
 
@@ -50,8 +52,8 @@ self.onmessage = (event: MessageEvent<Message>) => {
     riveInstances.set(id, riveInstance);
   }
 
-  if (event.data.type === "dispose") {
-    console.log("dispose");
+  if (event.data.type === "cleanup") {
+    console.log("cleanup");
     const instance = riveInstances.get(id);
     if (!instance) {
       console.warn(`No rive instance found for id ${id}`);
