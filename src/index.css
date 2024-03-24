@@ -49,9 +49,11 @@ button {
 button:hover {
   border-color: #646cff;
 }
-button:focus,
+button:focus {
+  outline: 2px solid #646cff;
+}
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 2px solid #646cff;
 }
 
 @media (prefers-color-scheme: light) {

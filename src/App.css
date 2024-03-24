@@ -25,4 +25,11 @@
   display: block;
   margin-block-start: 1rem;
   margin-inline: auto;
+  min-width: 20ch;
+
+  transition: opacity 0.2s ease-out;
+}
+
+.blockMainThreadButton[aria-busy="true"] {
+  opacity: 0.75;
 }
