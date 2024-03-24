@@ -23,7 +23,14 @@ function App() {
         </div>
         <div>
           <h2>Worker with OffscreenCanvas</h2>
-          <OffscreenRive src={src} stateMachines={stateMachineName} />
+          <OffscreenRive
+            src={src}
+            stateMachines={stateMachineName}
+            style={{
+              width: 400,
+              height: 400,
+            }}
+          />
         </div>
       </div>
       <BlockMainThreadButton />

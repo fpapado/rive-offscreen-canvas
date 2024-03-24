@@ -6,13 +6,13 @@ settings:
 
 patchedDependencies:
   '@rive-app/canvas-lite@2.11.1':
-    hash: 2lvwyzwtdmluv65mnmuou7c3re
+    hash: gu4orx5zc2lrtpzi7of5tsolgm
     path: patches/@rive-app__canvas-lite@2.11.1.patch
 
 dependencies:
   '@rive-app/canvas-lite':
     specifier: ^2.11.1
-    version: 2.11.1(patch_hash=2lvwyzwtdmluv65mnmuou7c3re)
+    version: 2.11.1(patch_hash=gu4orx5zc2lrtpzi7of5tsolgm)
   '@rive-app/react-canvas-lite':
     specifier: ^4.8.3
     version: 4.8.3(react@18.2.0)
@@ -351,7 +351,7 @@ packages:
     resolution: {integrity: sha512-AJyNwZ/KfWckvRWryJlviGlIxGcy7mW7UPk0NUSCIp1JtOzBH7eECrh+4Chw3NV8piAhSIhItsIGrsejODE/Cw==}
     dev: false
 
-  /@rive-app/canvas-lite@2.11.1(patch_hash=2lvwyzwtdmluv65mnmuou7c3re):
+  /@rive-app/canvas-lite@2.11.1(patch_hash=gu4orx5zc2lrtpzi7of5tsolgm):
     resolution: {integrity: sha512-mImlIeDj7ECOqNBc+8l5CIlr/E2kTafI/eLjeqWiZEHFKb+dl4ekuL8P5FDxAIxjFhJddaaBW4HSwxdRlvKQRQ==}
     dev: false
     patched: true

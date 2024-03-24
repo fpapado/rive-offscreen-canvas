@@ -10,7 +10,7 @@ declare var self: DedicatedWorkerGlobalScope;
  */
 type Id = string;
 
-type MessageBase =
+type InboundMessageBase =
   | { type: "cleanup" }
   | {
       type: "load";
@@ -21,13 +21,27 @@ type MessageBase =
         autoplay?: boolean;
         stateMachines?: string | string[] | undefined;
       };
+    }
+  | {
+      type: "resizeDrawingSurfaceToCanvas";
+      data: {
+        devicePixelRatio: number;
+        width: number;
+        height: number;
+      };
     };
 
-export type Message = MessageBase & { id: Id };
+export type MessageFromWorker = InboundMessageBase & { id: Id };
+
+// TODO: These events could be made more ergonomic with a facade, that
+// exposes an eventListener interface.
+type OutboundMessageBase = { type: "load" };
+
+export type MessageToWorker = OutboundMessageBase & { id: Id };
 
 const riveInstances = new Map<Id, Rive>();
 
-self.onmessage = (event: MessageEvent<Message>) => {
+self.onmessage = (event: MessageEvent<MessageFromWorker>) => {
   const { id } = event.data;
 
   if (event.data.type === "load") {
@@ -39,21 +53,31 @@ self.onmessage = (event: MessageEvent<Message>) => {
       autoplay,
       stateMachines,
       onLoad: () => {
+        self.postMessage({ id, type: "load" } satisfies MessageToWorker);
         // Ideally, we could do this, but there is no direct access to
-        // HTMLCanvasElement, which rive-canvas expects. Maybe there should be a
-        // way to Proxy the access (e.g. via comlink)
+        // HTMLCanvasElement, which rive-canvas expects. There might be a more
+        // ergonomic way to attach these, e.g. via comlink.
         // riveInstance.resizeDrawingSurfaceToCanvas();
-
-        // Another option:
-        console.log(canvas.width, canvas.height);
       },
     });
 
     riveInstances.set(id, riveInstance);
   }
 
+  if (event.data.type === "resizeDrawingSurfaceToCanvas") {
+    const instance = riveInstances.get(id);
+    if (!instance) {
+      console.warn(`No rive instance found for id ${id}`);
+      return;
+    }
+
+    const { devicePixelRatio, width, height } = event.data.data;
+
+    // @ts-expect-error -- We have not updated the types after patching
+    instance.resizeDrawingSurfaceToCanvas(devicePixelRatio, width, height);
+  }
+
   if (event.data.type === "cleanup") {
-    console.log("cleanup");
     const instance = riveInstances.get(id);
     if (!instance) {
       console.warn(`No rive instance found for id ${id}`);

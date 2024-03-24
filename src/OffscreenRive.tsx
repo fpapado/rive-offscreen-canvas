@@ -1,13 +1,17 @@
+import type { RiveProps } from "@rive-app/react-canvas-lite";
 import {
-  RefCallback,
+  type ComponentProps,
+  type RefCallback,
   useCallback,
   useEffect,
   useId,
   useRef,
   useState,
 } from "react";
-import type { Message } from "./riveWorker/riveWorker";
-import type { RiveProps } from "@rive-app/react-canvas-lite";
+import type {
+  MessageFromWorker,
+  MessageToWorker,
+} from "./riveWorker/riveWorker";
 
 // This is the standard method of initialising a worker, and also the syntax
 // that Vite understands. Note that a single worker is created here; the
@@ -25,7 +29,12 @@ const riveWorker = new Worker(
 
 type Props = Pick<RiveProps, "src" | "stateMachines">;
 
-export function OffscreenRive({ src, stateMachines }: Props) {
+export function OffscreenRive({
+  src,
+  stateMachines,
+  style,
+  ...rest
+}: Props & ComponentProps<"canvas">) {
   const id = useId();
   const canvasRef = useRef<HTMLCanvasElement | null>();
   const [offscreenCanvas, setOffscreenCanvas] = useState<OffscreenCanvas>();
@@ -44,7 +53,7 @@ export function OffscreenRive({ src, stateMachines }: Props) {
           offscreenCanvas = element.transferControlToOffscreen();
           setOffscreenCanvas(offscreenCanvas);
         } catch (err) {
-          console.log("Could not transfer canvas offscreen", err);
+          console.error("Could not transfer canvas offscreen", err);
         }
         canvasRef.current = element;
       }
@@ -67,16 +76,50 @@ export function OffscreenRive({ src, stateMachines }: Props) {
           stateMachines,
           autoplay: true,
         },
-      } satisfies Message,
+      } satisfies MessageFromWorker,
       { transfer: [offscreenCanvas] }
     );
 
+    riveWorker.addEventListener(
+      "message",
+      (ev: MessageEvent<MessageToWorker>) => {
+        if (ev.data.type === "load") {
+          riveWorker.postMessage({
+            type: "resizeDrawingSurfaceToCanvas",
+            id,
+            data: structuredClone({
+              devicePixelRatio: window.devicePixelRatio,
+              width: canvasRef.current?.width!,
+              height: canvasRef.current?.height!,
+            }),
+          } satisfies MessageFromWorker);
+        }
+      }
+    );
+
     return () => {
-      riveWorker.postMessage({ type: "cleanup", id } satisfies Message);
+      riveWorker.postMessage({
+        type: "cleanup",
+        id,
+      } satisfies MessageFromWorker);
     };
   }, [offscreenCanvas]);
 
-  // TODO: @rive-app/react-canvas does a few neat things with resizing the
-  // canvas; we can probably mirror them here.
-  return <canvas ref={setCanvasRef} width="400" height="400"></canvas>;
+  return (
+    <div style={style}>
+      <canvas
+        ref={setCanvasRef}
+        // Cheating a bit, and hardcoding these for demonstration purposes
+        // TODO: @rive-app/react-canvas does a few neat things with resizing the
+        // canvas; we can probably mirror them here.
+        width="400"
+        height="400"
+        style={{
+          width: 400,
+          height: 400,
+        }}
+        {...rest}
+      ></canvas>
+    </div>
+  );
 }
