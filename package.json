@@ -12,7 +12,6 @@
   "dependencies": {
     "@rive-app/canvas-lite": "^2.11.1",
     "@rive-app/react-canvas-lite": "^4.8.3",
-    "@rive-app/webgl2": "^2.11.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
