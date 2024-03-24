@@ -1,0 +1,13 @@
+diff --git a/rive.js b/rive.js
+index 457bbced886ea2f1d43b5d875a73a8136fdc87f9..6614142d23fd4ef1dc2d369c586e6554abdeaba2 100644
+--- a/rive.js
++++ b/rive.js
+@@ -150,7 +150,7 @@ h.onRuntimeInitialized = function() {
+ const fa = "createConicGradient createImageData createLinearGradient createPattern createRadialGradient getContextAttributes getImageData getLineDash getTransform isContextLost isPointInPath isPointInStroke measureText".split(" "), ha = new function() {
+   function b() {
+     if (!a) {
+-      var f = document.createElement("canvas"), r = {alpha:1, depth:0, stencil:0, antialias:0, premultipliedAlpha:1, preserveDrawingBuffer:0, preferLowPowerToHighPerformance:0, failIfMajorPerformanceCaveat:0, enableExtensionsByDefault:1, explicitSwapControl:1, renderViaOffscreenBackBuffer:1,};
++      var f = globalThis?.document?.createElement("canvas") ?? new OffscreenCanvas(1, 1), r = {alpha:1, depth:0, stencil:0, antialias:0, premultipliedAlpha:1, preserveDrawingBuffer:0, preferLowPowerToHighPerformance:0, failIfMajorPerformanceCaveat:0, enableExtensionsByDefault:1, explicitSwapControl:1, renderViaOffscreenBackBuffer:1,};
+       let q;
+       if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+         if (q = f.getContext("webgl", r), c = 1, !q) {

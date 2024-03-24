@@ -4,7 +4,21 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@rive-app/canvas-lite@2.11.1':
+    hash: 2lvwyzwtdmluv65mnmuou7c3re
+    path: patches/@rive-app__canvas-lite@2.11.1.patch
+
 dependencies:
+  '@rive-app/canvas-lite':
+    specifier: ^2.11.1
+    version: 2.11.1(patch_hash=2lvwyzwtdmluv65mnmuou7c3re)
+  '@rive-app/react-canvas-lite':
+    specifier: ^4.8.3
+    version: 4.8.3(react@18.2.0)
+  '@rive-app/webgl2':
+    specifier: ^2.11.1
+    version: 2.11.1
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -335,6 +349,28 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
     dev: true
+
+  /@rive-app/canvas-lite@2.10.3:
+    resolution: {integrity: sha512-AJyNwZ/KfWckvRWryJlviGlIxGcy7mW7UPk0NUSCIp1JtOzBH7eECrh+4Chw3NV8piAhSIhItsIGrsejODE/Cw==}
+    dev: false
+
+  /@rive-app/canvas-lite@2.11.1(patch_hash=2lvwyzwtdmluv65mnmuou7c3re):
+    resolution: {integrity: sha512-mImlIeDj7ECOqNBc+8l5CIlr/E2kTafI/eLjeqWiZEHFKb+dl4ekuL8P5FDxAIxjFhJddaaBW4HSwxdRlvKQRQ==}
+    dev: false
+    patched: true
+
+  /@rive-app/react-canvas-lite@4.8.3(react@18.2.0):
+    resolution: {integrity: sha512-cKiIt2DUb1ZJaG2hFvlp0HNLl+azL9nwtkjsEiLjhxTEvbNX0aznMDfAJi2yoGNYOSwQ3w4cqt1Ga4nZ4Y/AqA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@rive-app/canvas-lite': 2.10.3
+      react: 18.2.0
+    dev: false
+
+  /@rive-app/webgl2@2.11.1:
+    resolution: {integrity: sha512-NLiEeOqPXqwHl9lAepnMjRkR6JrmLvNOgyc92oP6ZxP1TQZh/4+qHiURFK3iPfJOD6pgT8uU7vnXb70ayDheAA==}
+    dev: false
 
   /@rollup/rollup-android-arm-eabi@4.13.0:
     resolution: {integrity: sha512-5ZYPOuaAqEH/W3gYsRkxQATBW3Ii1MfaT4EQstTnLKViLi2gLSQmlmtTpGucNP3sXEpOiI5tdGhjdE111ekyEg==}

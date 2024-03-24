@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@rive-app/canvas-lite": "^2.11.1",
+    "@rive-app/react-canvas-lite": "^4.8.3",
+    "@rive-app/webgl2": "^2.11.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -24,5 +27,10 @@
     "eslint-plugin-react-refresh": "^0.4.6",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "@rive-app/canvas-lite@2.11.1": "patches/@rive-app__canvas-lite@2.11.1.patch"
+    }
   }
 }
