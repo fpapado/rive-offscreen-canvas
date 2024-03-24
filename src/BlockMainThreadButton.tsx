@@ -15,7 +15,7 @@ export function BlockMainThreadButton() {
         }
         setBlocked(true);
         setTimeout(() => {
-          fibonacci(42);
+          console.log(fibonacci(42));
           setBlocked(false);
         }, 100);
       }}
