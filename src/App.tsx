@@ -33,11 +33,18 @@ function App() {
           />
         </div>
       </div>
-      <p className="attribution">
-        <a href="https://rive.app/community/2732-5606-clean-the-car/">
-          Source: Clean the Car, by JcToon
-        </a>
-      </p>
+      <div className="attribution">
+        <p>
+          <a href="https://rive.app/community/2732-5606-clean-the-car/">
+            Animation: Clean the Car, by JcToon.
+          </a>
+        </p>
+        <p>
+          <a href="https://github.com/fpapado/rive-offscreen-canvas">
+            Demo source code on GitHub.
+          </a>
+        </p>
+      </div>
       <BlockMainThreadButton />
     </div>
   );
