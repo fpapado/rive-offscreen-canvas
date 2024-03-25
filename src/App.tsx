@@ -33,6 +33,11 @@ function App() {
           />
         </div>
       </div>
+      <p className="attribution">
+        <a href="https://rive.app/community/2732-5606-clean-the-car/">
+          Source: Clean the Car, by JcToon
+        </a>
+      </p>
       <BlockMainThreadButton />
     </div>
   );

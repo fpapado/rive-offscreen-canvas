@@ -33,3 +33,7 @@
 .blockMainThreadButton[aria-busy="true"] {
   opacity: 0.75;
 }
+
+.attribution {
+  text-align: center;
+}
