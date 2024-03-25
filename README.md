@@ -43,7 +43,7 @@ The worker loading is handled via [Vite's web worker feature](https://v3.vitejs.
 ### Source issues
 
 While Rive's types accept `canvas: HTMLCanvasElement | OffscreenCanvas`, the implementation does occasionally reach out to either `document`, `document.createElement`, or comparisons to `instanceof HTMLCanvasElement`.
-These features are not available a worker scope, meaning that they will throw in most cases.
+These features are not available in a worker scope, meaning that they will throw in most cases.
 
 The `patches` directory contains some [pnpm-backed patches](https://pnpm.io/cli/patch) related to all this.
 
@@ -59,10 +59,10 @@ Rive's [resizeDrawingSurfaceToCanvas()](https://help.rive.app/runtimes/overview/
 
 This method is recommended to be called in the `onLoad` callback, to avoid blurry images on high-dpi screens, and might be called automatically in future Rive versions.
 
-At the moment, there is the `customDevicePixelRatio` option, but Rive needs to also reed the canvas `width` and `height`.
+At the moment, there is the `customDevicePixelRatio` option, but Rive needs to also read the canvas `width` and `height`.
 
-To solve this, `resizeDrawingSurfaceToCanvas` could take a callback, to defer to the caller for how to figure out the device pixel ratio, as well as width and height.
-It could alternatively take `width` and `weight` as parameters in addition to `customDevicePixelRatio`, and skip the auto-detection if those are specified.
+To solve this, `resizeDrawingSurfaceToCanvas` could defer to the caller for how to figure out the device pixel ratio, as well as width and height.
+It could take `width` and `weight` as parameters in addition to `customDevicePixelRatio`, and skip the auto-detection if those are specified.
 
 This approach seems compatible with this note from the Rive docs:
 
